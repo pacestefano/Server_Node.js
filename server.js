@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000; // Usa la porta fornita da Render.com
 
 app.use(cors()); // Usa il middleware CORS
 app.use(express.json());
+app.use(express.static('public')); // Serve i file statici dalla directory 'public'
 
 app.get('/data', (req, res) => {
     fs.readFile('data.json', 'utf8', (err, data) => {
@@ -15,6 +16,7 @@ app.get('/data', (req, res) => {
             return;
         }
         console.log('Dati letti con successo:', data);
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Permetti le richieste CORS da qualsiasi origine
         res.send(data);
     });
 });
@@ -28,6 +30,7 @@ app.post('/data', (req, res) => {
             return;
         }
         console.log('Dati salvati con successo:', newData);
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Permetti le richieste CORS da qualsiasi origine
         res.send('Dati salvati con successo');
     });
 });
